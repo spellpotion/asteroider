@@ -2,7 +2,7 @@
 
 namespace Asteroider
 {
-    [CreateAssetMenu(fileName = "Gun", menuName = "Scriptable Objects/Equipment/Gun")]
+    [CreateAssetMenu(fileName = "Gun", menuName = "Scriptable Objects/Config/Equipment/Gun")]
     public class Gun設定 : 抽象EquipmentConfig<Gun機器>
     {
         public AudioClip SoundFire;

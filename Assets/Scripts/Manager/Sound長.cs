@@ -2,7 +2,7 @@
 
 namespace Asteroider
 {
-    public class Sound長 : 抽象Manager<Sound長, Sound設定>
+    public class Sound長 : 抽象Manager<Sound長, Audio設定>
     {
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private AudioSource[] soundSources;

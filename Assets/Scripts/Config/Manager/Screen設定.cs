@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Asteroider.Manager
 {
-    [CreateAssetMenu(fileName = "’ŠÛLayoutConfig", menuName = "Scriptable Objects/’ŠÛManager/’ŠÛLayoutConfig")]
-    public class Layoutİ’è : ’ŠÛManagerConfig<Screen’·>
+    [CreateAssetMenu(fileName = "Screen", menuName = "Scriptable Objects/Config/Manager/Screen")]
+    public class Screenİ’è : ’ŠÛManagerConfig<Screen’·>
     {
         [Serializable]
         public class LayoutByLayoutTypeEntry

@@ -7,7 +7,7 @@ namespace Asteroider
 {
     public enum LayoutType { Initial, Menu, Game }
 
-    public class Screen長 : 抽象Manager<Screen長, Layout設定>
+    public class Screen長 : 抽象Manager<Screen長, Screen設定>
     {
         public static void SetScreen(LayoutType screenType)
             => Instance.SetScreen_Implementation(screenType);

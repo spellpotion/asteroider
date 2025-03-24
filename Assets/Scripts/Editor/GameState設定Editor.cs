@@ -2,7 +2,7 @@ using UnityEditor;
 
 namespace Asteroider.Manager.Editor
 {
-    [CustomEditor(typeof(Layoutê›íË))]
+    [CustomEditor(typeof(Screenê›íË))]
     public class GameStateê›íËEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()

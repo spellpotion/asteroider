@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroider
 {
-    [CreateAssetMenu(fileName = "Enemy設定", menuName = "Scriptable Objects/Enemy設定")]
+    [CreateAssetMenu(fileName = "Enemy", menuName = "Scriptable Objects/Config/Gameboard Object/Enemy")]
     public class Enemy設定 : 抽象Config
     {
         public float Speed = 80f;

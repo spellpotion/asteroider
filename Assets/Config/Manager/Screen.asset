@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdc09a9d7b3005b4cab72b27d6a24d51, type: 3}
-  m_Name: Layout
+  m_Script: {fileID: 11500000, guid: 0dd47b329c487c0449ef79b109c4559c, type: 3}
+  m_Name: Screen
   m_EditorClassIdentifier: 
   layoutByLayoutType:
   - LayoutType: 1

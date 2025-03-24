@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df225f3434ac0aa46b9d35e98287aab5, type: 3}
-  m_Name: GameRules
+  m_Script: {fileID: 11500000, guid: cb1e0ea4b7191e34b90d2043eed73d4e, type: 3}
+  m_Name: Game
   m_EditorClassIdentifier: 
   ShipPrefab: {fileID: -3791056208137525588, guid: 4b85e1f0c70106245bdc3338444394b2,
     type: 3}

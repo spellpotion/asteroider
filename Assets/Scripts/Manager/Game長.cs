@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Asteroider
 {
-    public class Game長 : 抽象Manager<Game長, GameRules設定>
+    public class Game長 : 抽象Manager<Game長, Game設定>
     {
         enum State { None, Demo, GameStart, Running, GameEnd }
         private State state;
