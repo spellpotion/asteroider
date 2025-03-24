@@ -31,21 +31,21 @@ namespace Asteroider
         {
             base.OnEnable();
 
-            Layout長.OnLayout終.AddListener(OnLayout終);
-            Layout長.OnLayout始.AddListener(OnLayout始);
+            Screen長.OnScreenClear.AddListener(OnScreenClear);
+            Screen長.OnScreenSet.AddListener(OnScreenSet);
         }
 
         override protected void OnDisable()
         {
-            Layout長.OnLayout終.RemoveListener(OnLayout終);
-            Layout長.OnLayout始.RemoveListener(OnLayout始);
+            Screen長.OnScreenClear.RemoveListener(OnScreenClear);
+            Screen長.OnScreenSet.RemoveListener(OnScreenSet);
 
             base.OnDisable();
         }
 
-        private void OnLayout終(LayoutType layoutType) => musicSource.Stop();
+        private void OnScreenClear() => musicSource.Stop();
 
-        private void OnLayout始(LayoutType layoutType)
+        private void OnScreenSet(LayoutType layoutType)
         {
             if (layoutType == LayoutType.Game)
             {

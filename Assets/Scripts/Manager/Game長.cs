@@ -5,19 +5,26 @@ using Random = UnityEngine.Random;
 
 namespace Asteroider
 {
-    public class GameRules長 : 抽象Manager<GameRules長, GameRules設定>
+    public class Game長 : 抽象Manager<Game長, GameRules設定>
     {
-        public static EventProxy<int> OnSetPlayerLife = new(out onSetPlayerLife);
-        public static EventProxy<int> OnSetScore = new (out onSetScore);
-        public static EventProxy<bool> OnGamePaused = new (out onGamePaused);
+        enum State { None, Demo, GameStart, Running, GameEnd }
+        private State state;
 
+        public static EventProxy<int> OnSetPlayerLife = new(out onSetPlayerLife);
+        public static EventProxy<int> OnSetScore = new(out onSetScore);
+        public static EventProxy<bool> OnGamePause = new(out onGamePause);
+        public static EventProxy OnGameEnd = new(out onGameEnd);
+
+        public static void StartDemo() => Instance.StartDemo_Implementation();
+        public static void StopDemo() => Instance.StopDemo_Implementation();
         public static void StartGame() => Instance.StartGame_Implementation();
         public static void PauseGame() => Instance.PauseGame_Implementation();
-        public static void ExitGame() => Instance.ExitGame_Implementation();
+        public static void StopGame() => Instance.StopGame_Implementation();
 
         private static Action<int> onSetPlayerLife;
         private static Action<int> onSetScore;
-        private static Action<bool> onGamePaused;
+        private static Action<bool> onGamePause;
+        private static Action onGameEnd;
 
         private float spawnAnomalyProbability;
         private float spawnAnomalyDelay;
@@ -25,6 +32,7 @@ namespace Asteroider
         private int playerLife;
         private int score;
         private int asteroidCount;
+
         private bool gamePaused;
 
         private Coroutine spawnSpecialWait;
@@ -37,96 +45,95 @@ namespace Asteroider
 
             Reward能.OnReward.AddListener(OnReward);
             Asteroid.OnCountUpdate.AddListener(OnAsteroidCountUpdate);
-            GameState長.OnGameState始.AddListener(OnGameState始);
-            Layout長.OnLayout終.AddListener(OnLayout終);
         }
 
         override protected void OnDisable()
         {
-            Layout長.OnLayout終.RemoveListener(OnLayout終);
-            GameState長.OnGameState始.RemoveListener(OnGameState始);
             Asteroid.OnCountUpdate.RemoveListener(OnAsteroidCountUpdate);
             Reward能.OnReward.RemoveListener(OnReward);
 
             base.OnDisable();
         }
 
-        #region UI
+        private void StartDemo_Implementation()
+        {
+            state = State.Demo;
+
+            SpawnAsteroids();
+            SetGamePaused(false);
+        }
+
+        private void StopDemo_Implementation()
+        {
+            state = State.None;
+
+            Gameboard長.Clear();
+            SetGamePaused(true);
+        }
 
         private void StartGame_Implementation()
         {
-            GameState長.ChangeState(GameState.GameStart);
+            state = State.GameStart;
+
+            InitializeGame();
+
+            SpawnShip();
+            SpawnAsteroids();
+            SpawnAnomalyDelayed();
+
+            state = State.Running;
+
+            SetGamePaused(false);
         }
 
         private void PauseGame_Implementation()
         {
+            if (state != State.Running) return;
+
             gamePaused = !gamePaused;
 
             Time.timeScale = gamePaused ? 0f : 1f;
-            onGamePaused?.Invoke(gamePaused);
+
+            onGamePause?.Invoke(gamePaused);
         }
 
-        private void ExitGame_Implementation()
-            => GameState長.ChangeState(GameState.Menu);
-
-        #endregion UI
-        #region Layout
-
-        private void OnLayout終(LayoutType layoutType)
+        private void StopGame_Implementation()
         {
-            if (layoutType == LayoutType.Game)
+            state = State.None;
+
+            Gameboard長.Clear();
+
+            if (spawnShipWait != null)
             {
-                if (spawnShipWait != null)
-                {
-                    StopCoroutine(spawnShipWait);
-                    spawnShipWait = null;
-                }
-                if (spawnSpecialWait != null)
-                { 
-                    StopCoroutine(spawnSpecialWait);
-                    spawnSpecialWait = null;
-                }
-                if (spawnAsteroidsWait != null)
-                {
-                    StopCoroutine(spawnAsteroidsWait);
-                    spawnAsteroidsWait = null;
-                }
+                StopCoroutine(spawnShipWait);
+                spawnShipWait = null;
             }
+            if (spawnSpecialWait != null)
+            {
+                StopCoroutine(spawnSpecialWait);
+                spawnSpecialWait = null;
+            }
+            if (spawnAsteroidsWait != null)
+            {
+                StopCoroutine(spawnAsteroidsWait);
+                spawnAsteroidsWait = null;
+            }
+
+            SetGamePaused(true);
         }
 
-        #endregion Layout
-        #region GameState
-
-        private void OnGameState始(GameState gameState)
+        private void SetGamePaused(bool gamePaused)
         {
-            if (gameState == GameState.Menu)
-            {
-                SpawnAsteroids();
-            }
-            else if (gameState == GameState.GameStart)
-            {
-                InitializeGame();
+            Time.timeScale = gamePaused ? 0f : 1f;
 
-                SpawnShip();
-                SpawnAsteroids();
-                SpawnAnomalyDelayed();
-
-                GameState長.ChangeState(GameState.GameRunning);
-            }
-
-            UnPause();
-        }
-
-        private void UnPause()
-        {
-            gamePaused = false;
-            Time.timeScale = 1f;
+            this.gamePaused = gamePaused;
         }
 
         private void InitializeGame()
         {
             SetPlayerLife(設定.LifeMax);
             SetScore(0);
+
             asteroidCount = 0;
 
             spawnAnomalyDelay = 設定.DelaySpawnAnomalyInitial;
@@ -139,7 +146,7 @@ namespace Asteroider
             onSetPlayerLife?.Invoke(playerLife);
         }
 
-        #endregion GameState
+
         #region Score
 
         private void OnReward(int reward)
@@ -163,6 +170,8 @@ namespace Asteroider
 
         private void OnSpawnShipDisabled(GameboardObject ship)
         {
+            if (state != State.Running) return;
+
             Gameboard長.Remove(ship);
 
             SetPlayerLife(playerLife - 1);
@@ -173,7 +182,9 @@ namespace Asteroider
             }
             else
             {
-                GameState長.ChangeState(GameState.GameEnd);
+                state = State.GameEnd;
+
+                onGameEnd?.Invoke();
             }
         }
         private IEnumerator SpawnShipWait()
@@ -190,11 +201,7 @@ namespace Asteroider
 
         private void OnAsteroidCountUpdate(bool add)
         {
-            if (GameState長.GameState != GameState.GameRunning &&
-                GameState長.GameState != GameState.GameStart)
-            {
-                return;
-            }
+            if (state != State.Running && state != State.GameStart) return;
 
             asteroidCount += add ? 1 : -1;
             
@@ -253,7 +260,7 @@ namespace Asteroider
             spawnAnomalyDelay *= 設定.RatioSpawnCuriosity;
             spawnAnomalyProbability *= 設定.RatioSpawnCuriosity;
 
-            if (GameState長.GameState == GameState.GameRunning)
+            if (state == State.Running)
             {
                 SpawnAnomalyDelayed();
             }

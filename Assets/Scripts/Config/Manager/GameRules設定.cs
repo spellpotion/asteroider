@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Asteroider
 {
     [CreateAssetMenu(fileName = "GameRules", menuName = "Scriptable Objects/抽象Manager/GameRules")]
-    public class GameRules設定 : 抽象ManagerConfig<GameRules長>
+    public class GameRules設定 : 抽象ManagerConfig<Game長>
     {
         [Header("Player")]
         public Ship ShipPrefab;

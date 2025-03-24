@@ -30,19 +30,6 @@ namespace Asteroider.UI
 
         protected virtual void OnEnable()
         {
-            StartCoroutine(OnClickHack());
-        }
-
-        protected virtual void OnDisable()
-        {
-            buttonStart.onClick.RemoveListener(OnClickGameStart);
-        }
-
-        private IEnumerator OnClickHack()
-        {
-            yield return new WaitForEndOfFrame();
-
-            buttonStart.onClick.AddListener(OnClickGameStart);
             buttonStart.Select();
         }
 
@@ -50,8 +37,6 @@ namespace Asteroider.UI
         {
             selector.SetParent(baseEvent.selectedObject.transform, false);
         }
-
-        public void OnClickGameStart() => GameRules長.StartGame();
 
         private void OnValidate()
         {
@@ -63,7 +48,5 @@ namespace Asteroider.UI
         {
             Application.Quit();
         }
-
-
     }
 }

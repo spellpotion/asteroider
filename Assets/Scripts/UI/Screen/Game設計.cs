@@ -15,42 +15,33 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
 
         private void OnEnable()
         {
-            GameRules長.OnSetPlayerLife.AddListener(OnSetPlayerLife);
-            GameRules長.OnSetScore.AddListener(OnSetScore);
-            GameRules長.OnGamePaused.AddListener(OnGamePaused);
-            GameState長.OnGameState始.AddListener(OnGameState始);
+            pauseOverlay.SetActive(false);
+            gameOver.SetActive(false);
 
-            var UIInputModule = EventSystem.current.GetComponent<InputSystemUIInputModule>();
-            UIInputModule.cancel.action.performed += OnCancel;
-            UIInputModule.submit.action.performed += OnSubmit;
+            Game長.OnSetPlayerLife.AddListener(OnSetPlayerLife);
+            Game長.OnSetScore.AddListener(OnSetScore);
+            Game長.OnGamePause.AddListener(OnGamePause);
+            Game長.OnGameEnd.AddListener(OnGameEnd);
+
+            if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
+            {
+                UIInputModule.cancel.action.performed += OnCancel;
+                UIInputModule.submit.action.performed += OnSubmit;
+            }
         }
 
         private void OnDisable()
         {
-            var UIInputModule = EventSystem.current?.GetComponent<InputSystemUIInputModule>();
-            if (UIInputModule != null)
+            if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
             {
                 UIInputModule.cancel.action.performed -= OnSubmit;
                 UIInputModule.cancel.action.performed -= OnCancel;
             }
 
-            GameState長.OnGameState始.RemoveListener(OnGameState始);
-            GameRules長.OnGamePaused.RemoveListener(OnGamePaused);
-            GameRules長.OnSetPlayerLife.RemoveListener(OnSetPlayerLife);
-            GameRules長.OnSetScore.RemoveListener(OnSetScore);
-        }
-
-        private void OnGameState始(GameState gameState)
-        {
-            if (gameState == GameState.GameStart)
-            {
-                pauseOverlay.SetActive(false);
-                gameOver.SetActive(false);
-            }
-            if (gameState == GameState.GameEnd)
-            {
-                gameOver.SetActive(true);
-            }
+            Game長.OnGameEnd.RemoveListener(OnGameEnd);
+            Game長.OnGamePause.RemoveListener(OnGamePause);
+            Game長.OnSetPlayerLife.RemoveListener(OnSetPlayerLife);
+            Game長.OnSetScore.RemoveListener(OnSetScore);
         }
 
         private void OnSetPlayerLife(int value)
@@ -74,26 +65,31 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
             }
         }
 
-        private void OnGamePaused(bool value)
+        private void OnGamePause(bool gamePaused)
         {
-            pauseOverlay.SetActive(value);
+            pauseOverlay.SetActive(gamePaused);
+        }
+
+        private void OnGameEnd()
+        {
+            gameOver.SetActive(true);
         }
 
         public void OnCancel(InputAction.CallbackContext context)
         {
             if (gameOver.activeInHierarchy)
             {
-                GameRules長.ExitGame();
+                General長.EndGame();
             }
             else
             {
-                GameRules長.PauseGame();
+                Game長.PauseGame();
             }
         }
 
         private void OnSubmit(InputAction.CallbackContext context)
         {
-            if (gameOver.activeInHierarchy || pauseOverlay.activeInHierarchy)  GameRules長.ExitGame();
+            if (gameOver.activeInHierarchy || pauseOverlay.activeInHierarchy)  General長.EndGame();
         }
     }
 }

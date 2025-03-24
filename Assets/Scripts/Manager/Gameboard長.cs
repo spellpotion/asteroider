@@ -19,6 +19,8 @@ namespace Asteroider
         private Transform gameBoard;
         private readonly List<GameboardObject> gameboardObjects = new();
 
+        public static void Clear() => Instance.Clear_Implementation();
+
         public static void Add(GameboardObject gameboardObject)
             => Instance.Add_Implementation(gameboardObject);
 
@@ -46,15 +48,11 @@ namespace Asteroider
         protected override void OnEnable()
         {
             base.OnEnable();
-
-            Layout長.OnLayout終.AddListener(OnLayout終);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-
-            Layout長.OnLayout終.RemoveListener(OnLayout終);
         }
 
         private void LateUpdate()
@@ -63,6 +61,16 @@ namespace Asteroider
             {
                 WrapPosition(gameboardObject.transform);
             }
+        }
+
+        private void Clear_Implementation()
+        {
+            for (var i = gameboardObjects.Count - 1; i >= 0; i--)
+            {
+                Destroy(gameboardObjects[i].gameObject);
+            }
+
+            gameboardObjects.Clear();
         }
 
         private void Add_Implementation(GameboardObject gameboardObject)
@@ -131,16 +139,6 @@ namespace Asteroider
                 Random.Range(0, 2) == 0 ? screenMin.x : screenMax.x,
                 Random.Range(screenMin.y, screenMax.y),
                 0f);
-        }
-
-        private void OnLayout終(LayoutType layoutType)
-        {
-            for (var i = gameboardObjects.Count - 1; i >= 0; i--)
-            {
-                Destroy(gameboardObjects[i].gameObject);
-            }
-
-            gameboardObjects.Clear();
         }
     }
 }
