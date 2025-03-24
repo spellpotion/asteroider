@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Asteroider
 {
+    [RequireComponent(typeof(PlayerInput))]
     public class Game長 : 抽象Manager<Game長, Game設定>
     {
         enum State { None, Demo, GameStart, Running, GameEnd }
@@ -204,7 +206,7 @@ namespace Asteroider
             if (state != State.Running && state != State.GameStart) return;
 
             asteroidCount += add ? 1 : -1;
-            
+
             if (asteroidCount == 0)
             {
                 spawnAsteroidsWait = StartCoroutine(SpawnAsteroidsWait());
@@ -267,6 +269,55 @@ namespace Asteroider
         }
 
         #endregion Anomaly
+        #region Debug
+#if UNITY_EDITOR
+
+        private void OnSpawnEnemy()
+        {
+            var prefab = 設定.EnemyPrefab;
+            var position = Gameboard長.GetRandomPositionOnTheEdge();
+
+            var enemy = Instantiate(prefab, position, Quaternion.identity);
+
+            if (state == State.Running)
+            {
+                if (spawnAsteroidsWait != null)
+                {
+                    StopCoroutine(spawnAsteroidsWait);
+                    spawnAsteroidsWait = null;
+                }
+                enemy.OnDisabled.AddListener(OnAnomalyDisabled);
+            }
+            else
+            {
+                enemy.OnDisabled.AddListener(x => Gameboard長.Remove(x));
+            }
+        }
+
+        private void OnSpawnCuriosity()
+        {
+            var prefab = 設定.CuriosityPrefab;
+            var position = Gameboard長.GetRandomPositionOnTheEdge();
+
+            var curiosity = Instantiate(prefab, position, Quaternion.identity);
+
+            if (state == State.Running)
+            {
+                if (spawnAsteroidsWait != null)
+                {
+                    StopCoroutine(spawnAsteroidsWait);
+                    spawnAsteroidsWait = null;
+                }
+                curiosity.OnDisabled.AddListener(OnAnomalyDisabled);
+            }
+            else
+            {
+                curiosity.OnDisabled.AddListener(x => Gameboard長.Remove(x));
+            }
+        }
+
+#endif
+        #endregion Debug
 
         protected virtual void OnDestroy()
         {

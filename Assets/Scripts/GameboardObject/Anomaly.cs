@@ -20,6 +20,13 @@ namespace Asteroider
             audioSource.Play();
         }
 
-        // TODO LateUpdate
+        protected void Update()
+        {
+            if (transform.position.x < Gameboard’·.ScreenMin.x ||
+                transform.position.x > Gameboard’·.ScreenMax.x)
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

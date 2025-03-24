@@ -112,12 +112,6 @@ namespace Asteroider
             transform.position = position;
         }
 
-        //public static bool IsOutsideViewport(Transform transform)
-        //{
-        //    return transform.position.x < screenMin.x ||
-        //        transform.position.x > screenMax.x;
-        //}
-
         private Vector3 GetRandomPositionInside_Implementation()
         {
             Vector3 position;
