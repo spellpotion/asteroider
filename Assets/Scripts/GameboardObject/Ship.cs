@@ -9,7 +9,7 @@ namespace Asteroider
     {
         private new Collider2D collider;
 
-        private readonly List<SpriteRenderer> sprites = new();
+        private readonly List<SpriteRenderer> renderers = new();
 
         private Coroutine spawnProtection;
 
@@ -25,18 +25,22 @@ namespace Asteroider
             {
                 foreach (var sprite in GetComponentsInChildren<SpriteRenderer>(false))
                 {
-                    if (sprite.enabled) sprites.Add(sprite);
+                    if (sprite.enabled) renderers.Add(sprite);
                 }
             }
         }
 
         protected virtual void OnEnable()
         {
+            Game’·.OnGamePause.AddListener(OnGamePause);
+
             spawnProtection = StartCoroutine(SpawnProtection());
         }
 
         protected override void OnDisable()
         {
+            Game’·.OnGamePause.RemoveListener(OnGamePause);
+
             if (spawnProtection != null)
             {
                 StopCoroutine(spawnProtection);
@@ -46,6 +50,18 @@ namespace Asteroider
             base.OnDisable();
         }
 
+        private void OnGamePause(bool gamePaused)
+        {
+            if (spawnProtection == null) return;
+
+            if (!gamePaused) return;
+
+            foreach (var renderer in renderers)
+            {
+                renderer.enabled = true;
+            }
+        }
+
         private IEnumerator SpawnProtection()
         {
             collider.enabled = false;
@@ -53,12 +69,12 @@ namespace Asteroider
             var timeEnd = Time.time + Ý’è.DurationSpawnProtection;
             while (timeEnd > Time.time)
             {
-                foreach (var sprite in sprites) sprite.enabled = !sprite.enabled;
+                foreach (var renderer in renderers) renderer.enabled = !renderer.enabled;
 
                 yield return new WaitForSeconds(.1f);
             }
 
-            foreach (var sprite in sprites) sprite.enabled = true;
+            foreach (var sprite in renderers) sprite.enabled = true;
 
             collider.enabled = true;
 
