@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882883515abc4d54a9fe02526b25821c, type: 3}
   m_Name: Asteroid L
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 3083312026223063521, guid: 603219203e853a343859c3166634df18, type: 3}
+  DebrisPrefab: {fileID: 6025110208461879790, guid: 603219203e853a343859c3166634df18,
+    type: 3}
   Count: 2
   Sound: {fileID: 8300000, guid: f65d3235d8c2af047a3a20b6e1240bac, type: 3}

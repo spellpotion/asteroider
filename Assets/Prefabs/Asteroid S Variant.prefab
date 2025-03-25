@@ -45,12 +45,12 @@ PrefabInstance:
     - target: {fileID: 3732513477544128587, guid: 603219203e853a343859c3166634df18,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3732513477544128587, guid: 603219203e853a343859c3166634df18,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3732513477544128587, guid: 603219203e853a343859c3166634df18,
         type: 3}
@@ -116,6 +116,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _initialSpeedMax
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3732513477794519922, guid: 603219203e853a343859c3166634df18,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3732513477794519922, guid: 603219203e853a343859c3166634df18,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4691430670173208950, guid: 603219203e853a343859c3166634df18,
         type: 3}

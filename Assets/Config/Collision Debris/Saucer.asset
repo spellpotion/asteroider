@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882883515abc4d54a9fe02526b25821c, type: 3}
   m_Name: Saucer
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 6866638769539190287, guid: ea6d601929d9fc04183f8bb67b41c765, type: 3}
+  DebrisPrefab: {fileID: 1324499660787947205, guid: ea6d601929d9fc04183f8bb67b41c765,
+    type: 3}
   Count: 2
   Sound: {fileID: 8300000, guid: 7020f67507d2c0c48b4e7a2449bfad82, type: 3}

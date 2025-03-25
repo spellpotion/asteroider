@@ -23,10 +23,6 @@ namespace Asteroider
 
             void CollectEnabledSprites()
             {
-                foreach (var sprite in GetComponents<SpriteRenderer>())
-                {
-                    if (sprite.enabled) sprites.Add(sprite);
-                }
                 foreach (var sprite in GetComponentsInChildren<SpriteRenderer>(false))
                 {
                     if (sprite.enabled) sprites.Add(sprite);

@@ -9,8 +9,10 @@ namespace Asteroider
         {
             for (var i = 0; i < 設定.Count; i++)
             {
-                Instantiate(設定.Prefab,
+                var debris = Instantiate(設定.DebrisPrefab,
                     transform.position, transform.rotation);
+
+                debris.OnDisabled.AddListener(x => Gameboard長.Remove(x));
             }
 
             Sound長.Play(設定.Sound);

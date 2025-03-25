@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882883515abc4d54a9fe02526b25821c, type: 3}
   m_Name: Ship
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 6866638769539190287, guid: ea6d601929d9fc04183f8bb67b41c765, type: 3}
+  DebrisPrefab: {fileID: 1324499660787947205, guid: ea6d601929d9fc04183f8bb67b41c765,
+    type: 3}
   Count: 4
   Sound: {fileID: 8300000, guid: c54555b9a7c206d46ba801f9ac26d070, type: 3}

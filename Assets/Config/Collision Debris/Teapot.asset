@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882883515abc4d54a9fe02526b25821c, type: 3}
   m_Name: Teapot
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 8558585272022235030, guid: 8220a28cf1263ae4cab65e93bc692929, type: 3}
+  DebrisPrefab: {fileID: 1856891235782677418, guid: 8220a28cf1263ae4cab65e93bc692929,
+    type: 3}
   Count: 6
   Sound: {fileID: 8300000, guid: 7020f67507d2c0c48b4e7a2449bfad82, type: 3}
