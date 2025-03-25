@@ -25,3 +25,4 @@ MonoBehaviour:
   AsteroidPrefab: {fileID: -3206556156452063752, guid: a43b1ca6da261b1448ee3df1109b9ab5,
     type: 3}
   AsteroidCountInitial: 6
+  DelaySpawnAsteroids: 2

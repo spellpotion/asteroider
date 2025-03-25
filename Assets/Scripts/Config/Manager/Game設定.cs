@@ -20,5 +20,6 @@ namespace Asteroider
         [Header("Asteroid")]
         public GameboardObject AsteroidPrefab;
         public int AsteroidCountInitial = 6;
+        public float DelaySpawnAsteroids = 2f;
     }
 }

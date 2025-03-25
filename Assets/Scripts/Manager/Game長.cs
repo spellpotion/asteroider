@@ -217,17 +217,21 @@ namespace Asteroider
         {
             for (var i = 0; i < 設定.AsteroidCountInitial; i++)
             {
-                Instantiate(
+                var asteroid = (Asteroid)Instantiate(
                     設定.AsteroidPrefab,
                     Gameboard長.GetRandomPositionInside(),
                     Quaternion.identity
                     );
+
+                asteroid.OnDisabled.AddListener(x => Gameboard長.Remove(x));
+
+                if (state == State.Running) asteroid.Blink();
             }
         }
 
         private IEnumerator SpawnAsteroidsWait()
         {
-            yield return new WaitForSeconds(設定.DelaySpawnShip);
+            yield return new WaitForSeconds(設定.DelaySpawnAsteroids);
 
             SpawnAsteroids();
 

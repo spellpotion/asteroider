@@ -8,7 +8,6 @@ namespace Asteroider
         enum State { Initial, Menu, Game }
         private State state;
 
-
         protected void Start()
         {
             RunChangeToState(State.Menu);
@@ -91,7 +90,7 @@ namespace Asteroider
         public static void Quit() => Instance.Quit_Implementation();
         private void Quit_Implementation()
         {
-            
+            Application.Quit();
         }
     }
 }

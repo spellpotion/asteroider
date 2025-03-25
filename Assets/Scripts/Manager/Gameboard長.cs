@@ -77,7 +77,7 @@ namespace Asteroider
         {
             for (var i = gameboardObjects.Count - 1; i >= 0; i--)
             {
-                Remove_Implementation(gameboardObjects[i]);
+                gameboardObjects[i].gameObject.SetActive(false);
             }
         }
 
