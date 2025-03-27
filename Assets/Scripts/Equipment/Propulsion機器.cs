@@ -11,14 +11,21 @@ namespace Asteroider
 
         private bool active;
 
-        private SpriteRenderer sprite;
+        private SpriteRenderer rendererShip;
+        private new SpriteRenderer renderer;
 
         protected override void Awake()
         {
             base.Awake();
 
             audioSource.clip = Config.SoundActive;
-            sprite = GetComponent<SpriteRenderer>();
+            renderer = GetComponent<SpriteRenderer>();
+            rendererShip = transform.parent.GetComponentInChildren<SpriteRenderer>();
+        }
+
+        private void Update()
+        {
+            renderer.enabled = (active && rendererShip.isVisible);
         }
 
         private void FixedUpdate()
@@ -26,7 +33,6 @@ namespace Asteroider
             if (Active != active)
             {
                 active = Active;
-                sprite.enabled = active;
 
                 if (active) audioSource.Play();
             }

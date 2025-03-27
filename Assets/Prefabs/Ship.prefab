@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config: {fileID: 11400000, guid: 47781eaee4fb66e43a69142d9f768968, type: 2}
+  rendererParent: {fileID: 7441368086028922437}
 --- !u!1 &7441368086687186974
 GameObject:
   m_ObjectHideFlags: 0
