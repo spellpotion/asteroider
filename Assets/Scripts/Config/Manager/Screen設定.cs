@@ -12,12 +12,12 @@ namespace Asteroider.Manager
         public class LayoutByLayoutTypeEntry
         {
             public LayoutType LayoutType;
-            public íäè€Layout Layout;
+            public íäè€Screen Layout;
         }
 
         [SerializeField] private List<LayoutByLayoutTypeEntry> layoutByLayoutType = new();
 
-        public Dictionary<LayoutType, íäè€Layout> LayoutByLayoutType { get; private set; }
+        public Dictionary<LayoutType, íäè€Screen> LayoutByLayoutType { get; private set; }
 
         private void OnEnable()
         {

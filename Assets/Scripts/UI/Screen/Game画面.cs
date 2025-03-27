@@ -6,16 +6,15 @@ using UnityEngine.UI;
 
 namespace Asteroider.UI
 {
-public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
+public class Game画面 : 抽象Screen<Game画面>
     {
         [SerializeField] private Image[] lifes = null;
-        [SerializeField] private Image[] digits = null;
+        [SerializeField] private Score score = null;
         [SerializeField] private GameObject endGameOverlay = null;
         [SerializeField] private GameObject pauseOverlay = null;
         [SerializeField] private Transform selector = null;
 
         private Button buttonExitPause;
-        private Button buttonExit;
 
         private void Awake()
         {
@@ -40,8 +39,6 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
 
                 button.gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
             }
-
-            buttonExit = options[^1];
         }
 
         private void OnEnable()
@@ -81,18 +78,18 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
             }
         }
 
-        private void OnSetScore(int value)
-        {
-            digits[0].sprite = 設定.Numerals[value % 10];
+        private void OnSetScore(int value) => score.Set(value);
+        //{
+            //digits[0].sprite = 設定.Numerals[value % 10];
 
-            for (int i = 1; i < digits.Length; i++)
-            {
-                var number = Mathf.Pow(10f, i);
-                digits[i].enabled = (value >= number);
-                var index = ((int)((value / number) % number)) % 設定.Numerals.Length;
-                digits[i].sprite = 設定.Numerals[index % 設定.Numerals.Length];
-            }
-        }
+            //for (int i = 1; i < digits.Length; i++)
+            //{
+            //    var number = Mathf.Pow(10f, i);
+            //    digits[i].enabled = (value >= number);
+            //    var index = ((int)((value / number) % number)) % 設定.Numerals.Length;
+            //    digits[i].sprite = 設定.Numerals[index % 設定.Numerals.Length];
+            //}
+        //}
 
         private void OnGamePause(bool gamePaused)
         {
@@ -139,12 +136,10 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
             }
         }
 
-        protected override void OnValidate()
+        protected void OnValidate()
         {
-            base.OnValidate();
-
             Debug.Assert(lifes.Length > 0);
-            Debug.Assert(digits.Length > 0);
+            Debug.Assert(score != null);
             Debug.Assert(endGameOverlay != null);
             Debug.Assert(pauseOverlay != null);
             Debug.Assert(selector != null);

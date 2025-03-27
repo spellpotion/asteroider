@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 2545431017780242785}
   - component: {fileID: 1578264290527427508}
   m_Layer: 5
-  m_Name: "Menu\u8A2D\u8A08"
+  m_Name: "Menu\u753B\u9762"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

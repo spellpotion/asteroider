@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Asteroider.UI
 {
-    public class Menu設計 : 抽象Layout
+    public class Menu画面 : 抽象Screen
     {
         [SerializeField] private Transform menu = null;
         [SerializeField] private Transform selector = null;

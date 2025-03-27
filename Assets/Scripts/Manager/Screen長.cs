@@ -22,7 +22,7 @@ namespace Asteroider
         private static Action<LayoutType> onSetScreen;
 
         private Canvas canvas;
-        private readonly Dictionary<LayoutType, 抽象Layout> layoutsLoaded = new();
+        private readonly Dictionary<LayoutType, 抽象Screen> layoutsLoaded = new();
 
         protected void Awake()
         {
@@ -46,7 +46,7 @@ namespace Asteroider
                 LoadScreen(screenType);
             }
 
-            if (layoutsLoaded.TryGetValue(screenType, out 抽象Layout screen))
+            if (layoutsLoaded.TryGetValue(screenType, out 抽象Screen screen))
             {
                 screen.gameObject.SetActive(true);
             }
