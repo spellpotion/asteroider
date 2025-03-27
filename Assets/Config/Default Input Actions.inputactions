@@ -628,6 +628,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ForceEnd",
+                    "type": "Button",
+                    "id": "1be3310c-2db1-4f67-80bc-5cd6bcbf8206",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -650,6 +659,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "SpawnCuriosity",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0db1a8a7-a48f-45ab-b957-50c6e46dbca8",
+                    "path": "<Keyboard>/#(X)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ForceEnd",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

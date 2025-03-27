@@ -10,32 +10,44 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
     {
         [SerializeField] private Image[] lifes = null;
         [SerializeField] private Image[] digits = null;
-        [SerializeField] private GameObject gameOver = null;
+        [SerializeField] private GameObject endGameOverlay = null;
         [SerializeField] private GameObject pauseOverlay = null;
         [SerializeField] private Transform selector = null;
 
+        private Button buttonExitPause;
         private Button buttonExit;
 
         private void Awake()
         {
-            var pauseOptions = pauseOverlay.GetComponentsInChildren<Button>(true);
-
-            foreach (var button in pauseOptions)
+            var options = pauseOverlay.GetComponentsInChildren<Button>(true);
+            foreach (var button in options)
             {
                 var entry = new EventTrigger.Entry { eventID = EventTriggerType.Select };
 
-                entry.callback.AddListener(OnPauseOptionSelect);
+                entry.callback.AddListener(OnOptionSelect);
 
                 button.gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
             }
 
-            buttonExit = pauseOptions[^1];
+            buttonExitPause = options[^1];
+
+            options = endGameOverlay.GetComponentsInChildren<Button>(true);
+            foreach (var button in options)
+            {
+                var entry = new EventTrigger.Entry { eventID = EventTriggerType.Select };
+
+                entry.callback.AddListener(OnOptionSelect);
+
+                button.gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
+            }
+
+            buttonExit = options[^1];
         }
 
         private void OnEnable()
         {
             pauseOverlay.SetActive(false);
-            gameOver.SetActive(false);
+            endGameOverlay.SetActive(false);
 
             Game長.OnSetPlayerLife.AddListener(OnSetPlayerLife);
             Game長.OnSetScore.AddListener(OnSetScore);
@@ -45,7 +57,6 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
             if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
             {
                 UIInputModule.cancel.action.performed += OnCancel;
-                UIInputModule.submit.action.performed += OnSubmit;
             }
         }
 
@@ -53,7 +64,6 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
         {
             if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
             {
-                UIInputModule.cancel.action.performed -= OnSubmit;
                 UIInputModule.cancel.action.performed -= OnCancel;
             }
 
@@ -88,10 +98,10 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
         {
             pauseOverlay.SetActive(gamePaused);
 
-            if (gamePaused) buttonExit.Select();
+            if (gamePaused) buttonExitPause.Select();
         }
 
-        private void OnPauseOptionSelect(BaseEventData baseEvent)
+        private void OnOptionSelect(BaseEventData baseEvent)
         {
             selector.SetParent(baseEvent.selectedObject.transform, false);
         }
@@ -106,14 +116,20 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
             General長.EndGame();
         }
 
+        public void OnClickRestart()
+        {
+            General長.RestartGame();
+        }
+
         private void OnGameEnd()
         {
-            gameOver.SetActive(true);
+            endGameOverlay.SetActive(true);
         }
+
 
         public void OnCancel(InputAction.CallbackContext context)
         {
-            if (gameOver.activeInHierarchy)
+            if (endGameOverlay.activeInHierarchy)
             {
                 General長.EndGame();
             }
@@ -123,18 +139,13 @@ public class Game設計 : 抽象Layout<Game設計, GameLayout設定>
             }
         }
 
-        private void OnSubmit(InputAction.CallbackContext context)
-        {
-            if (gameOver.activeInHierarchy)  General長.EndGame();
-        }
-
         protected override void OnValidate()
         {
             base.OnValidate();
 
             Debug.Assert(lifes.Length > 0);
             Debug.Assert(digits.Length > 0);
-            Debug.Assert(gameOver != null);
+            Debug.Assert(endGameOverlay != null);
             Debug.Assert(pauseOverlay != null);
             Debug.Assert(selector != null);
         }

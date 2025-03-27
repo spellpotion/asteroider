@@ -320,6 +320,13 @@ namespace Asteroider
             }
         }
 
+        private void OnForceEnd()
+        {
+            state = State.GameEnd;
+
+            onGameEnd?.Invoke();
+        }
+
 #endif
         #endregion Debug
 
