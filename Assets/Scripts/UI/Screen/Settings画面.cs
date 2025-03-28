@@ -1,20 +1,21 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
-namespace Asteroider.UI
+namespace Asteroider
 {
-    public class Menu画面 : 抽象Screen
+    public class Settings画面 : 抽象Screen
     {
-        [SerializeField] private Transform menu = null;
+        [SerializeField] private Transform content = null;
         [SerializeField] private Transform selector = null;
 
         private GameObject selected;
 
         private void Awake()
         {
-            var options = menu.GetComponentsInChildren<Button>();
-
+            var options = GetComponentsInChildren<Button>();
             foreach (var button in options)
             {
                 var entry = new EventTrigger.Entry { eventID = EventTriggerType.Select };
@@ -27,10 +28,24 @@ namespace Asteroider.UI
             selected = options[0].gameObject;
         }
 
-        protected virtual void OnEnable()
+        private void OnEnable()
         {
+            if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
+            {
+                UIInputModule.cancel.action.performed += OnCancel;
+            }
+
             selected.GetComponent<Button>().Select();
             selector.SetParent(selected.transform, false);
+        }
+
+        private void OnDisable()
+        {
+            if (EventSystem.current != null &&
+                EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
+            {
+                UIInputModule.cancel.action.performed -= OnCancel;
+            }
         }
 
         private void OnOptionSelect(BaseEventData baseEvent)
@@ -40,10 +55,15 @@ namespace Asteroider.UI
             selected = baseEvent.selectedObject;
         }
 
+        private void OnCancel(InputAction.CallbackContext context)
+        {
+            General長.Back();
+        }
+
         private void OnValidate()
         {
+            Debug.Assert(content != null);
             Debug.Assert(selector != null);
-            Debug.Assert(menu != null);
         }
     }
 }

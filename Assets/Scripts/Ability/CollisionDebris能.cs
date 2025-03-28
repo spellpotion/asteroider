@@ -15,7 +15,7 @@ namespace Asteroider
                 debris.OnDisabled.AddListener(x => Gameboard長.Remove(x));
             }
 
-            Sound長.Play(設定.Sound);
+            Audio長.Play(設定.Sound);
 
             gameObject.SetActive(false);
         }

@@ -5,10 +5,12 @@ namespace Asteroider
 {
     public class General長 : 抽象Manager<General長>
     {
-        enum State { Initial, Menu, Game }
+        private enum State { Initial, Menu, Game }
         private State state;
 
         public static void StartGame() => Instance.StartGame_Implementation();
+        public static void Settings() => Instance.Settings_Implementation();
+        public static void Back() => Instance.Back_Implementation();
         public static void EndGame() => Instance.EndGame_Implementation();
         public static void RestartGame() => Instance.RestartGame_Implementation();
         public static void Quit() => Instance.Quit_Implementation();
@@ -18,65 +20,95 @@ namespace Asteroider
             RunChangeToState(State.Menu);
         }
 
+        #region State
+
         private void RunChangeToState(State state)
-        {
-            StartCoroutine(ChangeToState(state));
-        }
+            => StartCoroutine(ChangeToState(state));
 
         private IEnumerator ChangeToState(State state)
         {
-            ChangeState始(this.state, state);
+            ChangeState前();
 
-            yield return new WaitForEndOfFrame(); // necessary
+            yield return new WaitForEndOfFrame();
 
-            ChangeState終(this.state, state);
+            ChangeState後();
 
-            Debug.Log($"[{GetType().Name}] {this.state} → {state}");
+            Debug.Log($"[{GetType().Name}] state changed {this.state} → {state}");
 
             this.state = state;
+
+            void ChangeState前()
+            {
+                if (this.state == State.Menu)
+                {
+                    Game長.StopDemo();
+                }
+                else if (this.state == State.Game)
+                {
+                    Game長.StopGame();
+                }
+
+                Screen長.Clear();
+                Audio長.StopMusic();
+            }
+
+            void ChangeState後()
+            {
+                if (state == State.Menu)
+                {
+                    Screen長.OpenNew(ScreenType.Menu);
+                    Audio長.PlayMusic(MusicType.Menu);
+
+                    Game長.StartDemo();
+                }
+                else if (state == State.Game)
+                {
+                    Screen長.OpenNew(ScreenType.Game);
+                    Audio長.PlayMusic(MusicType.Game);
+
+                    Game長.StartGame();
+                }
+            }
         }
 
-        private void ChangeState始(State state前, State state次)
+        #endregion State
+        #region Screen
+
+        private void RunChangeScreen(ScreenType screenType)
+            => StartCoroutine(ChangeScreen(screenType));
+        private IEnumerator ChangeScreen(ScreenType screenType)
         {
-            if (state前 == State.Initial && state次 == State.Menu)
-            {
-                return;
-            }
-            if (state前 == State.Menu && state次 == State.Game)
-            {
-                Game長.StopDemo();
-                Screen長.ClearScreen();
-                return;
-            }
-            if (state前 == State.Game)
-            {
-                Game長.StopGame();
-                Screen長.ClearScreen();
-                return;
-            }
+            ChangeScreen前();
 
-            Debug.LogError($"[{GetType().Name}] timeBeg {state前} → {state次} UNDEFINED");
+            yield return new WaitForEndOfFrame();
+
+            ChangeScreen後(screenType);
         }
 
-        private void ChangeState終(State state前, State state次)
+        private void RunChangeScreenBack()
+            => StartCoroutine(ChangeScreenBack());
+        private IEnumerator ChangeScreenBack()
         {
-            if (state次 == State.Menu)
-            {
-                Screen長.SetScreen(LayoutType.Menu);
-                Game長.StartDemo();
-                return;
-            }
-            if (state次 == State.Game)
-            {
-                Screen長.SetScreen(LayoutType.Game);
-                Game長.StartGame();
-                return;
-            }
+            ChangeScreen前();
 
-            Debug.LogError($"[{GetType().Name}] timeEnd {state前} → {state次} UNDEFINED");
+            yield return new WaitForEndOfFrame();
+
+            Screen長.Back();
         }
 
-        
+        void ChangeScreen前()
+        {
+            Screen長.Clear();
+        }
+
+        void ChangeScreen後(ScreenType screenType)
+        {
+            Screen長.OpenAdd(screenType);
+        }
+
+        #endregion Screen
+        #region Implementation
+
         private void StartGame_Implementation()
         {
             if (state != State.Menu) return;
@@ -84,6 +116,12 @@ namespace Asteroider
             RunChangeToState(State.Game);
         }
 
+        private void Settings_Implementation()
+        {
+            if (state != State.Menu) return;
+
+            RunChangeScreen(ScreenType.Settings);
+        }
 
         private void EndGame_Implementation()
         {
@@ -94,16 +132,25 @@ namespace Asteroider
 
         private void RestartGame_Implementation()
         {
-            Debug.Log("Restart");
-
             if (state != State.Game) return;
 
             RunChangeToState(State.Game);
         }
 
+        private void Back_Implementation()
+        {
+            if (state != State.Menu) return;
+
+            RunChangeScreenBack();
+        }
+
         private void Quit_Implementation()
         {
+            if (state != State.Menu) return;
+
             Application.Quit();
         }
+
+        #endregion Implementation
     }
 }

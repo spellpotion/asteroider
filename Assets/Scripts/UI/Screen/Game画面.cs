@@ -59,7 +59,8 @@ public class Game画面 : 抽象Screen<Game画面>
 
         private void OnDisable()
         {
-            if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
+            if (EventSystem.current != null && 
+                EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var UIInputModule))
             {
                 UIInputModule.cancel.action.performed -= OnCancel;
             }
@@ -79,17 +80,6 @@ public class Game画面 : 抽象Screen<Game画面>
         }
 
         private void OnSetScore(int value) => score.Set(value);
-        //{
-            //digits[0].sprite = 設定.Numerals[value % 10];
-
-            //for (int i = 1; i < digits.Length; i++)
-            //{
-            //    var number = Mathf.Pow(10f, i);
-            //    digits[i].enabled = (value >= number);
-            //    var index = ((int)((value / number) % number)) % 設定.Numerals.Length;
-            //    digits[i].sprite = 設定.Numerals[index % 設定.Numerals.Length];
-            //}
-        //}
 
         private void OnGamePause(bool gamePaused)
         {
@@ -123,8 +113,7 @@ public class Game画面 : 抽象Screen<Game画面>
             endGameOverlay.SetActive(true);
         }
 
-
-        public void OnCancel(InputAction.CallbackContext context)
+        private void OnCancel(InputAction.CallbackContext context)
         {
             if (endGameOverlay.activeInHierarchy)
             {

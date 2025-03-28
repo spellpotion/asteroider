@@ -9,10 +9,14 @@ namespace Asteroider.Manager.Editor
         {
             serializedObject.Update();
 
-            SerializedProperty layoutByGameState
-                = serializedObject.FindProperty("layoutByLayoutType");
+            SerializedProperty screenByScreenType
+                = serializedObject.FindProperty("screenByScreenType");
 
-            EditorGUILayout.PropertyField(layoutByGameState, true);
+            EditorGUILayout.PropertyField(screenByScreenType, true);
+
+            SerializedProperty contrastêF = serializedObject.FindProperty("ContrastêF");
+
+            EditorGUILayout.PropertyField(contrastêF);
 
             serializedObject.ApplyModifiedProperties();
         }

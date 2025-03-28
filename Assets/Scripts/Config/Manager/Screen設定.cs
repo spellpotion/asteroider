@@ -9,21 +9,23 @@ namespace Asteroider.Manager
     public class Screenİ’è : ’ŠÛManagerConfig<Screen’·>
     {
         [Serializable]
-        public class LayoutByLayoutTypeEntry
+        public class ScreenByScreenTypeEntry
         {
-            public LayoutType LayoutType;
-            public ’ŠÛScreen Layout;
+            public ScreenType ScreenType;
+            public ’ŠÛScreen Screen;
         }
 
-        [SerializeField] private List<LayoutByLayoutTypeEntry> layoutByLayoutType = new();
+        [SerializeField] private List<ScreenByScreenTypeEntry> screenByScreenType = new();
 
-        public Dictionary<LayoutType, ’ŠÛScreen> LayoutByLayoutType { get; private set; }
+        public Color32 ContrastF;
+
+        public Dictionary<ScreenType, ’ŠÛScreen> ScreenByScreenType { get; private set; }
 
         private void OnEnable()
         {
-            LayoutByLayoutType = layoutByLayoutType.ToDictionary(
-                entry => entry.LayoutType,
-                entry => entry.Layout
+            ScreenByScreenType = screenByScreenType.ToDictionary(
+                entry => entry.ScreenType,
+                entry => entry.Screen
                 );
         }
     }

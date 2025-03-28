@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd47b329c487c0449ef79b109c4559c, type: 3}
   m_Name: Screen
   m_EditorClassIdentifier: 
-  layoutByLayoutType:
-  - LayoutType: 1
-    Layout: {fileID: 1578264290527427508, guid: 377879aebc7628c4f85c3f2da753ac76,
+  screenByScreenType:
+  - ScreenType: 1
+    Screen: {fileID: 1578264290527427508, guid: 377879aebc7628c4f85c3f2da753ac76,
       type: 3}
-  - LayoutType: 2
-    Layout: {fileID: 6943052112059350977, guid: 128b65f81b547614188da351cf94bebc,
+  - ScreenType: 2
+    Screen: {fileID: 6943052112059350977, guid: 128b65f81b547614188da351cf94bebc,
       type: 3}
+  - ScreenType: 3
+    Screen: {fileID: 8912237331413139220, guid: ee769630b52eb454c8ecc6c112606b02,
+      type: 3}
+  "Contrast\u8272":
+    serializedVersion: 2
+    rgba: 16743168

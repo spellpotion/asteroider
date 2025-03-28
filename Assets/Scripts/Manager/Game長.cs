@@ -276,56 +276,56 @@ namespace Asteroider
         #region Debug
 #if UNITY_EDITOR
 
-        private void OnSpawnEnemy()
-        {
-            var prefab = 設定.EnemyPrefab;
-            var position = Gameboard長.GetRandomPositionOnTheEdge();
+        //private void OnSpawnEnemy()
+        //{
+        //    var prefab = 設定.EnemyPrefab;
+        //    var position = Gameboard長.GetRandomPositionOnTheEdge();
 
-            var enemy = Instantiate(prefab, position, Quaternion.identity);
+        //    var enemy = Instantiate(prefab, position, Quaternion.identity);
 
-            if (state == State.Running)
-            {
-                if (spawnAsteroidsWait != null)
-                {
-                    StopCoroutine(spawnAsteroidsWait);
-                    spawnAsteroidsWait = null;
-                }
-                enemy.OnDisabled.AddListener(OnAnomalyDisabled);
-            }
-            else
-            {
-                enemy.OnDisabled.AddListener(x => Gameboard長.Remove(x));
-            }
-        }
+        //    if (state == State.Running)
+        //    {
+        //        if (spawnAsteroidsWait != null)
+        //        {
+        //            StopCoroutine(spawnAsteroidsWait);
+        //            spawnAsteroidsWait = null;
+        //        }
+        //        enemy.OnDisabled.AddListener(OnAnomalyDisabled);
+        //    }
+        //    else
+        //    {
+        //        enemy.OnDisabled.AddListener(x => Gameboard長.Remove(x));
+        //    }
+        //}
 
-        private void OnSpawnCuriosity()
-        {
-            var prefab = 設定.CuriosityPrefab;
-            var position = Gameboard長.GetRandomPositionOnTheEdge();
+        //private void OnSpawnCuriosity()
+        //{
+        //    var prefab = 設定.CuriosityPrefab;
+        //    var position = Gameboard長.GetRandomPositionOnTheEdge();
 
-            var curiosity = Instantiate(prefab, position, Quaternion.identity);
+        //    var curiosity = Instantiate(prefab, position, Quaternion.identity);
 
-            if (state == State.Running)
-            {
-                if (spawnAsteroidsWait != null)
-                {
-                    StopCoroutine(spawnAsteroidsWait);
-                    spawnAsteroidsWait = null;
-                }
-                curiosity.OnDisabled.AddListener(OnAnomalyDisabled);
-            }
-            else
-            {
-                curiosity.OnDisabled.AddListener(x => Gameboard長.Remove(x));
-            }
-        }
+        //    if (state == State.Running)
+        //    {
+        //        if (spawnAsteroidsWait != null)
+        //        {
+        //            StopCoroutine(spawnAsteroidsWait);
+        //            spawnAsteroidsWait = null;
+        //        }
+        //        curiosity.OnDisabled.AddListener(OnAnomalyDisabled);
+        //    }
+        //    else
+        //    {
+        //        curiosity.OnDisabled.AddListener(x => Gameboard長.Remove(x));
+        //    }
+        //}
 
-        private void OnForceEnd()
-        {
-            state = State.GameEnd;
+        //private void OnForceEnd()
+        //{
+        //    state = State.GameEnd;
 
-            onGameEnd?.Invoke();
-        }
+        //    onGameEnd?.Invoke();
+        //}
 
 #endif
         #endregion Debug

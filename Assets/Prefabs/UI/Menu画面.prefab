@@ -171,8 +171,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 270}
-  m_SizeDelta: {x: 0, y: -540}
+  m_AnchoredPosition: {x: 0, y: 300}
+  m_SizeDelta: {x: 0, y: -600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2972596427727885124
 CanvasRenderer:
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -252,8 +252,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 160, y: -230}
-  m_SizeDelta: {x: -320, y: -820}
+  m_AnchoredPosition: {x: 160, y: -210}
+  m_SizeDelta: {x: -320, y: -780}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3871553815109352731
 MonoBehaviour:
@@ -293,9 +293,8 @@ GameObject:
   - component: {fileID: 2514990835052841742}
   - component: {fileID: 7512808183972990066}
   - component: {fileID: 427988154238113598}
-  - component: {fileID: 1375201654263940242}
   m_Layer: 5
-  m_Name: Music
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,7 +360,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MUSIC
+  m_Text: SETTINGS
 --- !u!114 &427988154238113598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,19 +404,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7512808183972990066}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1375201654263940242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5047356106945165340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396d49a27c0b1cc4c9f554129cc2611f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls:
+      - m_Target: {fileID: 2372906853048046838, guid: b924cfbc4a7f8e14fa777e1e2ef6a4f5,
+          type: 3}
+        m_TargetAssemblyTypeName: "Asteroider.General\u9577, Assembly-CSharp"
+        m_MethodName: Settings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5888585526031434168
 GameObject:
   m_ObjectHideFlags: 0

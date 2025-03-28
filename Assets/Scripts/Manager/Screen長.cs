@@ -5,61 +5,98 @@ using UnityEngine;
 
 namespace Asteroider
 {
-    public enum LayoutType { Initial, Menu, Game }
+    public enum ScreenType { Initial, Menu, Game, Settings }
 
     public class Screen長 : 抽象Manager<Screen長, Screen設定>
     {
-        public static void SetScreen(LayoutType screenType)
-            => Instance.SetScreen_Implementation(screenType);
+        public static void OpenNew(ScreenType screenType) 
+            => Instance.OpenNew_Implementation(screenType);
 
-        public static void ClearScreen()
-            => Instance.ClearScreen_Implementation();
+        public static void OpenAdd(ScreenType screenType)
+            => Instance.OpenAdd_Implementation(screenType);
 
-        public static EventProxy OnScreenClear = new(out onScreenClear);
-        public static EventProxy<LayoutType> OnScreenSet = new(out onSetScreen);
+        public static void Back() => Instance.Back_Implementation();
+        public static void Clear() => Instance.Clear_Implementation();
 
-        private static Action onScreenClear;
-        private static Action<LayoutType> onSetScreen;
+        public static EventProxy OnClear = new(out onClear);
+        public static EventProxy<ScreenType> OnOpen = new(out onOpen);
+
+        public static string ColorHexContrast
+            => $"#{Instance.設定.Contrast色.r:X2}" +
+            $"{Instance.設定.Contrast色.g:X2}" +
+            $"{Instance.設定.Contrast色.b:X2}";
+
+        private static Action<ScreenType> onOpen;
+        private static Action onClear;
 
         private Canvas canvas;
-        private readonly Dictionary<LayoutType, 抽象Screen> layoutsLoaded = new();
+        
+        private readonly Dictionary<ScreenType, 抽象Screen> screensLoaded = new();
+        private readonly Stack<ScreenType> screenSequence = new();
 
         protected void Awake()
         {
             canvas = FindFirstObjectByType<Canvas>();
         }
 
-        private void ClearScreen_Implementation()
+        private void Clear_Implementation()
         {
-            foreach (var screen in layoutsLoaded)
+            foreach (var screen in screensLoaded)
             {
                 screen.Value.gameObject.SetActive(false);
             }
 
-            onScreenClear?.Invoke();
+            onClear?.Invoke();
         }
 
-        private void SetScreen_Implementation(LayoutType screenType)
+        private void OpenNew_Implementation(ScreenType screenType)
         {
-            if (!layoutsLoaded.ContainsKey(screenType))
-            {
-                LoadScreen(screenType);
-            }
+            SetActive(screenType);
 
-            if (layoutsLoaded.TryGetValue(screenType, out 抽象Screen screen))
+            screenSequence.Clear();
+            screenSequence.Push(screenType);
+
+            onOpen?.Invoke(screenType);
+        }
+
+        private void OpenAdd_Implementation(ScreenType screenType)
+        {
+            SetActive(screenType);
+
+            screenSequence.Push(screenType);
+
+            onOpen?.Invoke(screenType);
+        }
+
+        private void Back_Implementation()
+        {
+            screenSequence.Pop();
+
+            var screenType = screenSequence.Peek();
+
+            SetActive(screenType);
+
+            onOpen?.Invoke(screenType);
+        }
+
+        private void SetActive(ScreenType screenType)
+        {
+            LoadScreen(screenType);
+
+            if (screensLoaded.TryGetValue(screenType, out 抽象Screen screen))
             {
                 screen.gameObject.SetActive(true);
             }
-
-            onSetScreen?.Invoke(screenType);
         }
 
-        private void LoadScreen(LayoutType layoutType)
+        private void LoadScreen(ScreenType layoutType)
         {
-            var original = 設定.LayoutByLayoutType[layoutType];
+            if (screensLoaded.ContainsKey(layoutType)) return;
+
+            var original = 設定.ScreenByScreenType[layoutType];
             var parent = canvas.transform;
 
-            layoutsLoaded.Add(layoutType, Instantiate(original, parent));
+            screensLoaded.Add(layoutType, Instantiate(original, parent));
         }
     }
 }
