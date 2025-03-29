@@ -15,6 +15,12 @@ namespace Asteroider
             propulsion = GetComponentInChildren<Propulsion機器>();
         }
 
+        private void Start()
+        {
+            GetComponent<PlayerInput>().
+                SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Mouse.current);
+        }
+
         void OnThrust(InputValue value) => propulsion.Active = value.isPressed;
 
         void OnRotate(InputValue value) => propulsion.Rotate = value.Get<float>();

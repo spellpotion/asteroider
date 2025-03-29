@@ -225,7 +225,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3add4a6fc4fa4164e84f084721170c8c, type: 3}
     m_FontSize: 84
-    m_FontStyle: 2
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 8
     m_MaxSize: 98
@@ -456,7 +456,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "ROTATE \u21BA\n"
+  m_Text: 'ROTATE L
+
+'
 --- !u!114 &1794174817670605154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,7 +807,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "ROTATE \u21BB"
+  m_Text: ROTATE R
 --- !u!114 &6688881193528257938
 MonoBehaviour:
   m_ObjectHideFlags: 0
