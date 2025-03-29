@@ -21,10 +21,8 @@ namespace Asteroider
         public static EventProxy OnClear = new(out onClear);
         public static EventProxy<ScreenType> OnOpen = new(out onOpen);
 
-        public static string ColorHexContrast
-            => $"#{Instance.設定.Contrast色.r:X2}" +
-            $"{Instance.設定.Contrast色.g:X2}" +
-            $"{Instance.設定.Contrast色.b:X2}";
+        public static Color32 色Contrast1 => Instance.設定.Contrast色1;
+        public static Color32 色Contrast2 => Instance.設定.Contrast色2;
 
         private static Action<ScreenType> onOpen;
         private static Action onClear;

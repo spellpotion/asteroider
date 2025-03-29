@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
 namespace Asteroider
@@ -33,6 +32,16 @@ namespace Asteroider
             label = (text.text).Trim();
         }
 
+        private void OnEnable()
+        {
+            PlayerPrefs’·.OnUpdate.AddListener(UpdateLabel);
+        }
+
+        private void OnDisable()
+        {
+            PlayerPrefs’·.OnUpdate.RemoveListener(UpdateLabel);
+        }
+
         private void Start()
         {
             UpdateLabel();
@@ -41,6 +50,8 @@ namespace Asteroider
         private void OnClick()
         {
             if (catchKey != null) return;
+
+            text.text = label;
 
             catchKey = StartCoroutine(CatchKey());
         }
@@ -57,7 +68,7 @@ namespace Asteroider
             {
                 if (keyControl.wasPressedThisFrame)
                 {
-                    SetKeyBinding(keyControl);
+                    actionReference.action.ApplyBindingOverride(option, keyControl.path);
                     break;
                 }
             }
@@ -72,27 +83,14 @@ namespace Asteroider
             catchKey = null;
         }
 
-        private void SetKeyBinding(KeyControl keyControl)
-        {
-            string keyPath = keyControl.path;
-
-            var action = actionReference.action;
-            if (option >= action.bindings.Count)
-            {
-                return;
-            }
-
-            action.ApplyBindingOverride(option, keyPath);
-
-        }
-
         private void UpdateLabel()
         {
-            text.text = $"{label} <color={Screen’·.ColorHexContrast}><b>{Binding.ToUpper()}</b></color>";
+            text.text = $"{label} <color={Screen’·.FContrast1.ToHex()}><b>{Binding.ToUpper()}</b></color>";
         }
 
         private void OnValidate()
         {
+            Debug.Log(actionReference.action.bindings[option].path);
             Debug.Assert(actionReference != null);
         }
     }

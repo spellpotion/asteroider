@@ -8,11 +8,11 @@ namespace Asteroider
     public class PlayerPrefsIntButton : MonoBehaviour
     {
         [SerializeField] private string[] values = null;
-        [SerializeField] private string key = null;
+        [SerializeField] private PlayerPrefsKey key = default(PlayerPrefsKey);
 
         private int ValueInt
         {
-            get => PlayerPrefs.GetInt(key, 0);
+            get => PlayerPrefs’·.Get(key);
             set => PlayerPrefs’·.Set(key, value);
         }
 
@@ -33,6 +33,16 @@ namespace Asteroider
             label = (text.text).Trim();
         }
 
+        private void OnEnable()
+        {
+            PlayerPrefs’·.OnUpdate.AddListener(UpdateLabel);
+        }
+
+        private void OnDisable()
+        {
+            PlayerPrefs’·.OnUpdate.RemoveListener(UpdateLabel);
+        }
+
         private void Start()
         {
             UpdateLabel();
@@ -47,13 +57,13 @@ namespace Asteroider
 
         private void UpdateLabel()
         {
-            text.text = $"{label} <color={Screen’·.ColorHexContrast}><b>{Value}</b></color>";
+            text.text = $"{label} <color={Screen’·.FContrast1.ToHex()}><b>{Value}</b></color>";
         }
 
         private void OnValidate()
         {
             Debug.Assert(values.Length > 0);
-            Debug.Assert(!string.IsNullOrEmpty(key));
+            Debug.Assert(key != PlayerPrefsKey.None);
         }
     }
 }

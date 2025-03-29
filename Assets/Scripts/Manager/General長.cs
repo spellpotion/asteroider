@@ -10,7 +10,10 @@ namespace Asteroider
 
         public static void StartGame() => Instance.StartGame_Implementation();
         public static void Settings() => Instance.Settings_Implementation();
+        public static void RestoreDefaults()
+            => Instance.RestoreDefaults_Implementation();
         public static void Back() => Instance.Back_Implementation();
+
         public static void EndGame() => Instance.EndGame_Implementation();
         public static void RestartGame() => Instance.RestartGame_Implementation();
         public static void Quit() => Instance.Quit_Implementation();
@@ -135,6 +138,13 @@ namespace Asteroider
             if (state != State.Game) return;
 
             RunChangeToState(State.Game);
+        }
+
+        private void RestoreDefaults_Implementation()
+        {
+            if (state != State.Menu) return;
+
+            PlayerPrefs長.RestoreDefaults();
         }
 
         private void Back_Implementation()

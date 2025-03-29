@@ -25,20 +25,26 @@ namespace Asteroider
         protected override void OnEnable()
         {
             base.OnEnable();
-
-            PlayerPrefs長.AddListener("music", OnMusic);
+            PlayerPrefs長.AddListener(PlayerPrefsKey.Music, OnMusicPrefs);
+            PlayerPrefs長.AddListener(PlayerPrefsKey.Sound, OnSoundPrefs);
         }
 
         protected override void OnDisable()
         {
-            PlayerPrefs長.RemoveListener("music", OnMusic);
+            PlayerPrefs長.RemoveListener(PlayerPrefsKey.Sound, OnSoundPrefs);
+            PlayerPrefs長.RemoveListener(PlayerPrefsKey.Music, OnMusicPrefs);
 
             base.OnDisable();
         }
 
-        private void OnMusic(int value)
+        private void OnMusicPrefs(int value)
         {
-            musicSource.mute = value != 1;
+            musicSource.mute = value != 0;
+        }
+
+        private void OnSoundPrefs(int value)
+        {
+
         }
 
         private void PlayMusic_Implementation(MusicType musicType)

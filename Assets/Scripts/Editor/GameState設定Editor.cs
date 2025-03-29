@@ -14,9 +14,13 @@ namespace Asteroider.Manager.Editor
 
             EditorGUILayout.PropertyField(screenByScreenType, true);
 
-            SerializedProperty contrast色 = serializedObject.FindProperty("Contrast色");
+            SerializedProperty contrast色1 = serializedObject.FindProperty("Contrast色1");
 
-            EditorGUILayout.PropertyField(contrast色);
+            EditorGUILayout.PropertyField(contrast色1);
+
+            SerializedProperty contrast色2 = serializedObject.FindProperty("Contrast色2");
+
+            EditorGUILayout.PropertyField(contrast色2);
 
             serializedObject.ApplyModifiedProperties();
         }

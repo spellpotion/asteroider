@@ -22,6 +22,9 @@ MonoBehaviour:
   - ScreenType: 3
     Screen: {fileID: 8912237331413139220, guid: ee769630b52eb454c8ecc6c112606b02,
       type: 3}
-  "Contrast\u8272":
+  "Contrast\u82721":
     serializedVersion: 2
-    rgba: 16743168
+    rgba: 4294933248
+  "Contrast\u82722":
+    serializedVersion: 2
+    rgba: 4294933457

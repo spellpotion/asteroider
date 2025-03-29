@@ -17,7 +17,8 @@ namespace Asteroider.Manager
 
         [SerializeField] private List<ScreenByScreenTypeEntry> screenByScreenType = new();
 
-        public Color32 ContrastF;
+        public Color32 ContrastF1;
+        public Color32 ContrastF2;
 
         public Dictionary<ScreenType, ’ŠÛScreen> ScreenByScreenType { get; private set; }
 
