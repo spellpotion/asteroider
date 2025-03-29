@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Asteroid L
   m_EditorClassIdentifier: 
   Trajectory: 0
-  InitialSpeed: 120
+  InitialSpeedMin: 30
+  InitialSpeedMax: 120
   InitialTorqueMax: 30

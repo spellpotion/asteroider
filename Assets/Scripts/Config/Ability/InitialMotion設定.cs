@@ -8,7 +8,8 @@ namespace Asteroider
     public class InitialMotion設定 : 抽象AbilityConfig<InitialMotion能>
     {
         public TrajectoryType Trajectory;
-        public float InitialSpeed = 0f;
+        public float InitialSpeedMin = 0f;
+        public float InitialSpeedMax = 0f;
         public float InitialTorqueMax = 0f;
     }
 }

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Debris
   m_EditorClassIdentifier: 
   Trajectory: 0
-  InitialSpeed: 40
+  InitialSpeedMin: 10
+  InitialSpeedMax: 40
   InitialTorqueMax: 30

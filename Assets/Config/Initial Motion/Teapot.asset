@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Teapot
   m_EditorClassIdentifier: 
   Trajectory: 1
-  InitialSpeed: 4
+  InitialSpeedMin: 5
+  InitialSpeedMax: 10
   InitialTorqueMax: 10

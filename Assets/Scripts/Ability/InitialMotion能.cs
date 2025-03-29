@@ -21,19 +21,19 @@ namespace Asteroider
         {
             if (ê›íË.Trajectory == TrajectoryType.Random)
             {
-                body.AddForce(RandomForce(ê›íË.InitialSpeed));
+                body.AddForce(RandomForce(ê›íË.InitialSpeedMin, ê›íË.InitialSpeedMax));
             }
             else if (ê›íË.Trajectory == TrajectoryType.Across)
             {
-                body.AddForce(HorizontalForce(ê›íË.InitialSpeed, transform));
+                body.AddForce(HorizontalForce(ê›íË.InitialSpeedMin, transform));
             }
 
             body.AddTorque(RandomTorque(ê›íË.InitialTorqueMax));
         }
 
-        private static Vector2 RandomForce(float magnitudeMax)
+        private static Vector2 RandomForce(float magnitudeMin, float magnitudeMax)
         {
-            var magnitude = Random.Range(0f, magnitudeMax);
+            var magnitude = Random.Range(magnitudeMin, magnitudeMax);
             var angleDegrees = Random.Range(0f, 360f);
             var angleRadians = angleDegrees * Mathf.Deg2Rad;
 

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Asteroid S
   m_EditorClassIdentifier: 
   Trajectory: 0
-  InitialSpeed: 180
+  InitialSpeedMin: 50
+  InitialSpeedMax: 180
   InitialTorqueMax: 30
